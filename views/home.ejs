@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+    <h1>Categories</h1>
+    <div>
+        <%= categoryList.forEach((category)=> { %>
+            <div><%= category.itemName></div>
+            <div><%= category.itemDesc></div>
+            <div class="buttonContainer">
+            <a>Edit</a><a>Delete</a>
+            </div>
+        <% }) %>
+    </div>
+    <a href="/">Add category</a>
+</body>
+</html>
