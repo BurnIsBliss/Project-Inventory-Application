@@ -1,0 +1,27 @@
+{
+	"name": "project-inventory-application",
+	"version": "1.0.0",
+	"description": "This is the third project from the 'NodeJS' course which is part of the 'The Odin Porject'.",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/BurnIsBliss/Project-Inventory-Application.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"type": "commonjs",
+	"bugs": {
+		"url": "https://github.com/BurnIsBliss/Project-Inventory-Application/issues"
+	},
+	"homepage": "https://github.com/BurnIsBliss/Project-Inventory-Application#readme",
+	"dependencies": {
+		"ejs": "^7.0.2",
+		"express": "^5.3.0",
+		"express-validator": "^7.3.2",
+		"pg": "^8.23.1"
+	}
+}
