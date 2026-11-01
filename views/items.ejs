@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Items in <%=category_name%></title>
+		<link rel="stylesheet" href="/index.css" />
+	</head>
+	<body>
+		<h1>Items in <%=category_name%></h1>
+		<a href="/">Go to home -></a>
+		<div class="categoryContainer">
+        <% itemList.forEach((item)=> { %>
+            <div class="categoryDiv">
+                <div>
+                    <h3><%= item.item_name %></h3>
+                    <p><%= item.item_desc %></p>
+                </div>
+                <div class="buttonMainContainer">
+                    <div class="buttonContainer">
+                    <a>Edit item</a>
+                    <a>Delete item</a>
+                    </div>
+                </div>
+            </div>
+        <% }) %>
+    	</div>
+	</body>
+</html>
