@@ -4,18 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
+    <link rel="stylesheet" href="/index.css">
 </head>
 <body>
     <h1>Categories</h1>
-    <div>
         <% categoryList.forEach((category)=> { %>
-            <div><%= category.category_name %></div>
-            <div><%= category.category_desc %></div>
-            <div class="buttonContainer">
-            <a>Edit</a><a>Delete</a>
+            <div>
+                <div><%= category.category_name %></div>
+                <div><%= category.category_desc %></div>
+                <div class="buttonContainer">
+                <a>Edit</a>
+                <a>Delete</a>
             </div>
         <% }) %>
-    </div>
-    <a href="/">Add category</a>
+    <a href="/">Add NEW category</a>
 </body>
 </html>
