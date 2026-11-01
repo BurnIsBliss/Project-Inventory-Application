@@ -6,10 +6,10 @@ async function getAllCategories() {
 }
 
 async function getAllCategoryItems(category_name) {
-	const SQL_query =
-		'SELECT item_name, item_desc FROM items WHERE category_name = ' +
-		`'${category_name}'`;
-	const { rows } = await pool.query(SQL_query);
+	const { rows } = await pool.query(
+		'SELECT item_name, item_desc FROM items WHERE category_name LIKE ($1);',
+		[`${category_name}`],
+	);
 	return rows;
 }
 
