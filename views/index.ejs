@@ -8,9 +8,9 @@
 <body>
     <h1>Categories</h1>
     <div>
-        <%= categoryList.forEach((category)=> { %>
-            <div><%= category.itemName></div>
-            <div><%= category.itemDesc></div>
+        <% categoryList.forEach((category)=> { %>
+            <div><%= category.category_name %></div>
+            <div><%= category.category_desc %></div>
             <div class="buttonContainer">
             <a>Edit</a><a>Delete</a>
             </div>
