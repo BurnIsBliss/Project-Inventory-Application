@@ -2,3 +2,51 @@
 	background-color: black;
 	color: white;
 }
+
+.categoryContainer {
+	display: flex;
+	gap: 16px;
+	margin-top: 20px;
+}
+
+.categoryDiv {
+	border: 2px solid red;
+	border-radius: 4px;
+	width: 250px;
+	height: 300px;
+	padding: 10px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.categoryDiv > div > h3 {
+	text-align: center;
+	margin-top: 0;
+	margin-bottom: 10px;
+	text-decoration: underline;
+}
+
+a {
+	color: green;
+}
+
+a:visited {
+	color: red;
+}
+
+h1 {
+	text-align: center;
+}
+
+.buttonContainer {
+	display: flex;
+	gap: 10px;
+}
+
+.buttonMainContainer {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	gap: 14px;
+}

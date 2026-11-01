@@ -8,15 +8,23 @@
 </head>
 <body>
     <h1>Categories</h1>
+    <a href="/">Add NEW category</a>
+    <div class="categoryContainer">
         <% categoryList.forEach((category)=> { %>
-            <div>
-                <div><%= category.category_name %></div>
-                <div><%= category.category_desc %></div>
-                <div class="buttonContainer">
-                <a>Edit</a>
-                <a>Delete</a>
+            <div class="categoryDiv">
+                <div>
+                    <h3><%= category.category_name %></h3>
+                    <p><%= category.category_desc %></p>
+                </div>
+                <div class="buttonMainContainer">
+                    <div class="buttonContainer">
+                    <a>Edit category</a>
+                    <a>Delete category</a>
+                    </div>
+                    <a href="/">Go to items -></a>
+                </div>
             </div>
         <% }) %>
-    <a href="/">Add NEW category</a>
+    </div>
 </body>
 </html>
