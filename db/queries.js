@@ -5,6 +5,14 @@ async function getAllCategories() {
 	return rows;
 }
 
+async function returnCategoryName(category_name) {
+	const { rows } = await pool.query(
+		'SELECT category_name FROM category WHERE category_name = ($1)',
+		[category_name],
+	);
+	return rows;
+}
+
 async function getAllCategoryItems(category_name) {
 	const { rows } = await pool.query(
 		'SELECT item_name, item_desc FROM items WHERE category_name LIKE ($1);',
@@ -29,4 +37,5 @@ module.exports = {
 	getAllCategories,
 	getAllCategoryItems,
 	insertCategory,
+	returnCategoryName,
 };

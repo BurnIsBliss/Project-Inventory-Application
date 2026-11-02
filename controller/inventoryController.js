@@ -34,13 +34,19 @@ const addNewCategory = [
 	async (req, res) => {
 		const errors = validationResult(req);
 		if (!errors.isEmpty()) {
-			return res
-				.status(400)
-				.render('categoryForm', { errors: errors.array() });
+			return res.status(400).render('categoryForm', {
+				errors: errors.array(),
+			});
 		}
 		const { name, description } = matchedData(req);
-		await db.insertCategory(name, description);
-		res.redirect('/');
+		const rows = await db.returnCategoryName(name);
+		if (!rows) {
+			await db.insertCategory(name, description);
+			res.redirect('/');
+		} else
+			return res.status(400).render('categoryForm', {
+				errors: [{ msg: `The name, ${name} already exists.` }],
+			});
 	},
 ];
 
