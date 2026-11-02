@@ -13,7 +13,20 @@ async function getAllCategoryItems(category_name) {
 	return rows;
 }
 
+async function insertCategory(category_name, category_description) {
+	if (category_description)
+		await pool.query(
+			'INSERT INTO category (category_name, category_desc) VALUES (($1), ($2))',
+			[category_name, category_description],
+		);
+	else
+		await pool.query('INSERT INTO category (category_name) VALUES (($1))', [
+			category_name,
+		]);
+}
+
 module.exports = {
 	getAllCategories,
 	getAllCategoryItems,
+	insertCategory,
 };

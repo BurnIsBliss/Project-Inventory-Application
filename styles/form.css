@@ -31,3 +31,9 @@ button {
 	height: 35px;
 	font-size: 18px;
 }
+
+ul > li {
+	font-size: 18px;
+	color: red;
+	background-color: black;
+}

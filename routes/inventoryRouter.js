@@ -7,8 +7,8 @@ inventoryRouter.get(
 	'/category/:category_name',
 	inventoryController.getCategoryItems,
 );
-// inventoryRouter.get('/item/:itemId', inventoryController.getItem);
-// inventoryRouter.post('/', inventoryController.addNewCategory);
+inventoryRouter.get('/categoryForm', inventoryController.getCategoryForm);
+inventoryRouter.post('/categoryForm', inventoryController.addNewCategory);
 // inventoryRouter.post('/category/:categoryId', inventoryController.addNewItem);
 // inventoryRouter.put('/category/:categoryId', inventoryController.editCategory);
 // inventoryRouter.put('/item/:itemId', inventoryController.editItem);
