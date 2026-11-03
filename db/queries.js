@@ -33,9 +33,29 @@ async function insertCategory(category_name, category_description) {
 		]);
 }
 
+async function deleteCategory(category_name) {
+	const { rows } = await pool.query(
+		`SELECT * FROM items WHERE category_name = ($1) LIMIT 1`,
+		[`${category_name}`],
+	);
+	if (rows.length) {
+		await pool.query('DELETE FROM items WHERE category_name = ($1)', [
+			`${category_name}`,
+		]);
+		await pool.query('DELETE FROM category WHERE category_name = ($1)', [
+			`${category_name}`,
+		]);
+	} else {
+		await pool.query('DELETE FROM category WHERE category_name = ($1)', [
+			`${category_name}`,
+		]);
+	}
+}
+
 module.exports = {
 	getAllCategories,
 	getAllCategoryItems,
 	insertCategory,
 	returnCategoryName,
+	deleteCategory,
 };

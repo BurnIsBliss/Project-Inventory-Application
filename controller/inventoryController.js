@@ -1,5 +1,7 @@
 const db = require('../db/queries');
 const { body, validationResult, matchedData } = require('express-validator');
+const { loadEnvFile } = require('node:process');
+loadEnvFile();
 
 const validateInput = [
 	body('name')
@@ -50,9 +52,16 @@ const addNewCategory = [
 	},
 ];
 
+const deleteCategory = async (req, res) => {
+	const { category_name } = req.params;
+	await db.deleteCategory(category_name);
+	res.status(200).redirect('/');
+};
+
 module.exports = {
 	getCategories,
 	getCategoryItems,
 	getCategoryForm,
 	addNewCategory,
+	deleteCategory,
 };
