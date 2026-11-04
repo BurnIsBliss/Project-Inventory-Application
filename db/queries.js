@@ -13,6 +13,14 @@ async function returnCategoryName(category_name) {
 	return rows;
 }
 
+async function returnCategoryDetails(category_name) {
+	const { rows } = await pool.query(
+		'SELECT category_name, category_desc FROM category WHERE category_name = ($1)',
+		[`${category_name}`],
+	);
+	return rows;
+}
+
 async function getAllCategoryItems(category_name) {
 	const { rows } = await pool.query(
 		'SELECT item_name, item_desc FROM items WHERE category_name LIKE ($1);',
@@ -52,10 +60,27 @@ async function deleteCategory(category_name) {
 	}
 }
 
+async function editCategory(
+	old_category_name,
+	category_desc,
+	new_category_name,
+) {
+	await pool.query(
+		'UPDATE items SET category_name = ($1) WHERE category_name = ($2)',
+		[`${new_category_name}`, `${old_category_name}`],
+	);
+	await pool.query(
+		'UPDATE category SET category_name = ($1), category_desc = ($2) WHERE category_name = ($3)',
+		[`${new_category_name}`, `${category_desc}`, `${old_category_name}`],
+	);
+}
+
 module.exports = {
 	getAllCategories,
 	getAllCategoryItems,
 	insertCategory,
 	returnCategoryName,
+	returnCategoryDetails,
 	deleteCategory,
+	editCategory,
 };

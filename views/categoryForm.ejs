@@ -3,20 +3,27 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Category form</title>
+		<title><%= title %></title>
 		<link rel="stylesheet" href="/form.css" />
 	</head>
 	<body>
-		<h1>Category Form</h1>
+		<h1><%= title %></h1>
 		<%- include("partials/errors.ejs") %>
 		<form action="/categoryForm" method="post">
 			<div class="formContainer">
 				<label for="name">Enter the name of the category: </label>
-				<input type="text" id="name" name="name" />
+				<input
+					type="text"
+					id="name"
+					name="name"
+					value="<%= category_name %>"
+				/>
 				<label for="description"
 					>Enter the item description (optional):
 				</label>
-				<textarea name="description" id="description"></textarea>
+				<textarea name="description" id="description">
+<%= category_desc %></textarea
+				>
 				<button type="submit">Submit</button>
 			</div>
 		</form>

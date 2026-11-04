@@ -28,7 +28,11 @@ const getCategoryItems = async (req, res) => {
 };
 
 const getCategoryForm = (req, res) => {
-	res.render('categoryForm');
+	res.render('categoryForm', {
+		title: 'Add Category',
+		category_name: '',
+		category_desc: '',
+	});
 };
 
 const addNewCategory = [
@@ -37,20 +41,36 @@ const addNewCategory = [
 		const errors = validationResult(req);
 		if (!errors.isEmpty()) {
 			return res.status(400).render('categoryForm', {
+				title: 'Add Category',
+				category_name: '',
+				category_desc: '',
 				errors: errors.array(),
 			});
 		}
 		const { name, description } = matchedData(req);
 		const rows = await db.returnCategoryName(name);
-		if (!rows) {
+		if (!rows.length) {
 			await db.insertCategory(name, description);
 			res.redirect('/');
 		} else
 			return res.status(400).render('categoryForm', {
+				title: 'Add Category',
+				category_name: '',
+				category_desc: '',
 				errors: [{ msg: `The name, ${name} already exists.` }],
 			});
 	},
 ];
+
+const getEditCategory = async (req, res) => {
+	const { category_name } = req.params;
+	const row = await db.returnCategoryDetails(category_name);
+	res.render('categoryForm', {
+		title: 'Edit Category',
+		category_desc: row[0].category_desc,
+		category_name: row[0].category_name,
+	});
+};
 
 const deleteCategory = async (req, res) => {
 	const { category_name } = req.params;
@@ -64,4 +84,5 @@ module.exports = {
 	getCategoryForm,
 	addNewCategory,
 	deleteCategory,
+	getEditCategory,
 };
