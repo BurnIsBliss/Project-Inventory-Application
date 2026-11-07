@@ -9,7 +9,7 @@
 	<body>
 		<h1><%= title %></h1>
 		<%- include("partials/errors.ejs") %>
-		<form action="/categoryForm" method="post">
+		<form action="/categoryForm/<%= old_category_name %>" method="post">
 			<div class="formContainer">
 				<label for="name">Enter the name of the category: </label>
 				<input
@@ -24,6 +24,11 @@
 				<textarea name="description" id="description">
 <%= category_desc %></textarea
 				>
+				<input
+					type="hidden"
+					value="<%= old_category_name %>"
+					name="old_category_name"
+				/>
 				<button type="submit">Submit</button>
 			</div>
 		</form>

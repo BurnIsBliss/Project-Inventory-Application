@@ -8,11 +8,15 @@ inventoryRouter.get(
 	inventoryController.getCategoryItems,
 );
 inventoryRouter.get('/categoryForm', inventoryController.getCategoryForm);
-inventoryRouter.post('/categoryForm', inventoryController.addNewCategory);
-// inventoryRouter.post('/category/:categoryId', inventoryController.addNewItem);
 inventoryRouter.get(
 	'/categoryForm/:category_name',
-	inventoryController.getEditCategory,
+	inventoryController.getEditCategoryForm,
+);
+
+inventoryRouter.post('/categoryForm', inventoryController.addNewCategory);
+inventoryRouter.post(
+	'/categoryForm/:category_name',
+	inventoryController.editCategory,
 );
 // inventoryRouter.put('/item/:itemId', inventoryController.editItem);
 inventoryRouter.get('/:category_name', inventoryController.deleteCategory);

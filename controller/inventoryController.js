@@ -32,6 +32,7 @@ const getCategoryForm = (req, res) => {
 		title: 'Add Category',
 		category_name: '',
 		category_desc: '',
+		old_category_name: '',
 	});
 };
 
@@ -44,6 +45,7 @@ const addNewCategory = [
 				title: 'Add Category',
 				category_name: '',
 				category_desc: '',
+				old_category_name: '',
 				errors: errors.array(),
 			});
 		}
@@ -57,20 +59,55 @@ const addNewCategory = [
 				title: 'Add Category',
 				category_name: '',
 				category_desc: '',
+				old_category_name: '',
 				errors: [{ msg: `The name, ${name} already exists.` }],
 			});
 	},
 ];
 
-const getEditCategory = async (req, res) => {
+const getEditCategoryForm = async (req, res) => {
 	const { category_name } = req.params;
 	const row = await db.returnCategoryDetails(category_name);
 	res.render('categoryForm', {
 		title: 'Edit Category',
 		category_desc: row[0].category_desc,
 		category_name: row[0].category_name,
+		old_category_name: row[0].category_name,
 	});
 };
+
+const editCategory = [
+	validateInput,
+	async (req, res) => {
+		const errors = validationResult(req);
+		const { category_name } = req.params;
+		const { name, description } = matchedData(req);
+		const currentCategoryDetails =
+			await db.returnCategoryDetails(category_name);
+		const old_category_name = req.body.old_category_name;
+		if (!errors.isEmpty()) {
+			return res.status(400).render('categoryForm', {
+				title: 'Edit Category',
+				category_desc: currentCategoryDetails[0].category_desc,
+				category_name: category_name,
+				old_category_name: old_category_name,
+				errors: errors.array(),
+			});
+		}
+		const rows = await db.returnCategoryName(name);
+		if (!rows.length || old_category_name == name) {
+			await db.editCategory(old_category_name, description, name);
+			res.redirect('/');
+		} else
+			return res.status(400).render('categoryForm', {
+				title: 'Edit Category',
+				category_name: category_name,
+				category_desc: currentCategoryDetails[0].category_desc,
+				old_category_name: old_category_name,
+				errors: [{ msg: `The name, ${name} already exists.` }],
+			});
+	},
+];
 
 const deleteCategory = async (req, res) => {
 	const { category_name } = req.params;
@@ -84,5 +121,6 @@ module.exports = {
 	getCategoryForm,
 	addNewCategory,
 	deleteCategory,
-	getEditCategory,
+	getEditCategoryForm,
+	editCategory,
 };
