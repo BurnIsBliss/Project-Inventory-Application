@@ -8,6 +8,8 @@
 	gap: 16px;
 	margin-top: 20px;
 	flex-wrap: wrap;
+	justify-content: space-evenly;
+	padding: 0 40px;
 }
 
 .categoryDiv {
@@ -26,6 +28,11 @@
 	margin-top: 0;
 	margin-bottom: 10px;
 	text-decoration: underline;
+}
+
+.newCatContainer {
+	display: flex;
+	justify-content: center;
 }
 
 a {

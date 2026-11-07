@@ -6,7 +6,7 @@ loadEnvFile();
 const validateInput = [
 	body('name')
 		.trim()
-		.isAlpha()
+		.isAlpha('en-US', { ignore: ' ' })
 		.withMessage('Name should only contain alphabets.')
 		.isLength({ min: 1, max: 20 })
 		.withMessage('Name should be b/w 1 and 20 characters.'),
