@@ -2,6 +2,7 @@ const { Router } = require('express');
 const inventoryController = require('../controller/inventoryController');
 const inventoryRouter = Router();
 
+// get requests
 inventoryRouter.get('/', inventoryController.getCategories);
 inventoryRouter.get(
 	'/category/:category_name',
@@ -12,14 +13,15 @@ inventoryRouter.get(
 	'/categoryForm/:category_name',
 	inventoryController.getEditCategoryForm,
 );
-inventoryRouter.get('/itemForm', inventoryController.getItemForm);
+inventoryRouter.get('/itemForm/:category_id', inventoryController.getItemForm);
+inventoryRouter.get('/:category_name', inventoryController.deleteCategory);
 
+// post requests
 inventoryRouter.post('/categoryForm', inventoryController.addNewCategory);
 inventoryRouter.post(
 	'/categoryForm/:category_name',
 	inventoryController.editCategory,
 );
-inventoryRouter.get('/:category_name', inventoryController.deleteCategory);
-// inventoryRouter.delete('/item/:itemId', inventoryController.deleteItem);
+inventoryRouter.post('/itemForm/:category_id', inventoryController.addNewItem);
 
 module.exports = inventoryRouter;

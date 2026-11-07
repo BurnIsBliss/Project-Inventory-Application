@@ -5,7 +5,7 @@ loadEnvFile();
 const SQL = `
 CREATE TABLE IF NOT EXISTS category (id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY, category_name VARCHAR (255) UNIQUE NOT NULL, category_desc VARCHAR(255) DEFAULT '-');
 
-CREATE TABLE IF NOT EXISTS items (id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY, item_name VARCHAR (255) UNIQUE NOT NULL, item_desc VARCHAR(255) DEFAULT '-', category_id INTEGER REFERENCES category(id));
+CREATE TABLE IF NOT EXISTS items (id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY, item_name VARCHAR (255) NOT NULL, item_desc VARCHAR(255) DEFAULT '-', category_id INTEGER REFERENCES category(id) NOT NULL);
 
 INSERT INTO category (category_name, category_desc) VALUES ('Soaps', 'List of soaps used to maintain cleanliness and hygiene.'), ('Books', 'Includes both fiction and non-fiction'), ('Flags', 'Has the flags of some countries of the world.'), ('Seasons', DEFAULT);
 

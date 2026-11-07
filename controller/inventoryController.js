@@ -23,8 +23,13 @@ const getCategories = async (req, res) => {
 
 const getCategoryItems = async (req, res) => {
 	const { category_name } = req.params;
+	const category_id = await db.getCategoryId(category_name);
 	const items = await db.getAllCategoryItems(category_name);
-	res.render('items', { category_name: category_name, itemList: items });
+	res.render('items', {
+		category_name: category_name,
+		itemList: items,
+		category_id: category_id[0].id,
+	});
 };
 
 const getCategoryForm = (req, res) => {
@@ -77,13 +82,51 @@ const getEditCategoryForm = async (req, res) => {
 };
 
 const getItemForm = async (req, res) => {
+	const { category_id } = req.params;
 	res.render('itemForm', {
 		title: 'Add new item',
 		item_name: '',
 		item_desc: '',
+		category_id: category_id,
 		old_item_name: '',
 	});
 };
+
+const addNewItem = [
+	validateInput,
+	async (req, res) => {
+		const errors = validationResult(req);
+		const { category_id } = req.params;
+		if (!errors.isEmpty()) {
+			return res.status(400).render('itemForm', {
+				title: 'Add new item',
+				item_name: '',
+				item_desc: '',
+				old_item_name: '',
+				category_id: category_id,
+				errors: errors.array(),
+			});
+		}
+		const { name, description } = matchedData(req);
+		const rows = await db.checkDuplicateItem(category_id, name);
+		if (!rows.length) {
+			await db.insertItem(category_id, name, description);
+			const category_name = await db.returnCategoryName(
+				Number(category_id),
+			);
+			res.redirect(`/category/${category_name[0].category_name}`);
+		} else {
+			return res.status(400).render('itemForm', {
+				title: 'Add new item',
+				item_name: '',
+				item_desc: '',
+				old_item_name: '',
+				category_id: category_id,
+				errors: [{ msg: `The name, ${name} already exists.` }],
+			});
+		}
+	},
+];
 
 const editCategory = [
 	validateInput,
@@ -133,4 +176,5 @@ module.exports = {
 	getEditCategoryForm,
 	editCategory,
 	getItemForm,
+	addNewItem,
 };
