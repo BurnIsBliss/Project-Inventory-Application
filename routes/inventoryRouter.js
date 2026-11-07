@@ -12,13 +12,13 @@ inventoryRouter.get(
 	'/categoryForm/:category_name',
 	inventoryController.getEditCategoryForm,
 );
+inventoryRouter.get('/itemForm', inventoryController.getItemForm);
 
 inventoryRouter.post('/categoryForm', inventoryController.addNewCategory);
 inventoryRouter.post(
 	'/categoryForm/:category_name',
 	inventoryController.editCategory,
 );
-// inventoryRouter.put('/item/:itemId', inventoryController.editItem);
 inventoryRouter.get('/:category_name', inventoryController.deleteCategory);
 // inventoryRouter.delete('/item/:itemId', inventoryController.deleteItem);
 

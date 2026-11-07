@@ -8,7 +8,10 @@
 	</head>
 	<body>
 		<h1>Items in <%=category_name%></h1>
-		<a href="/">Go to home -></a>
+        <div class="newCatContainer">
+            <a href="/">Go to home -></a>
+            <a href="/itemForm" class="newItem">Add new item</a>
+        </div>
 		<div class="categoryContainer">
         <% itemList.forEach((item)=> { %>
             <div class="categoryDiv">

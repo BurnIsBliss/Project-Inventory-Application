@@ -1,6 +1,6 @@
 const db = require('../db/queries');
 const { body, validationResult, matchedData } = require('express-validator');
-const { loadEnvFile } = require('node:process');
+const { loadEnvFile, title } = require('node:process');
 loadEnvFile();
 
 const validateInput = [
@@ -76,6 +76,15 @@ const getEditCategoryForm = async (req, res) => {
 	});
 };
 
+const getItemForm = async (req, res) => {
+	res.render('itemForm', {
+		title: 'Add new item',
+		item_name: '',
+		item_desc: '',
+		old_item_name: '',
+	});
+};
+
 const editCategory = [
 	validateInput,
 	async (req, res) => {
@@ -123,4 +132,5 @@ module.exports = {
 	deleteCategory,
 	getEditCategoryForm,
 	editCategory,
+	getItemForm,
 };

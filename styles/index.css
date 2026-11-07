@@ -33,10 +33,12 @@
 .newCatContainer {
 	display: flex;
 	justify-content: center;
+	gap: 10px;
 }
 
 a {
 	color: green;
+	text-decoration: none;
 }
 
 a:hover {
@@ -57,4 +59,8 @@ h1 {
 	flex-direction: column;
 	justify-content: space-between;
 	gap: 14px;
+}
+
+.newItem {
+	color: orange;
 }
