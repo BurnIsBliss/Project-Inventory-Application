@@ -23,7 +23,7 @@ async function returnCategoryDetails(category_name) {
 
 async function getAllCategoryItems(category_name) {
 	const { rows } = await pool.query(
-		'SELECT item_name, item_desc FROM items WHERE category_name LIKE ($1);',
+		'SELECT item_name, item_desc FROM items WHERE category_id = (SELECT id FROM category WHERE category_name = ($1));',
 		[`${category_name}`],
 	);
 	return rows;
@@ -43,13 +43,14 @@ async function insertCategory(category_name, category_description) {
 
 async function deleteCategory(category_name) {
 	const { rows } = await pool.query(
-		`SELECT * FROM items WHERE category_name = ($1) LIMIT 1`,
+		`SELECT * FROM items WHERE category_id = (SELECT id FROM category WHERE category_name = ($1)) LIMIT 1`,
 		[`${category_name}`],
 	);
 	if (rows.length) {
-		await pool.query('DELETE FROM items WHERE category_name = ($1)', [
-			`${category_name}`,
-		]);
+		await pool.query(
+			'DELETE FROM items WHERE category_id = (SELECT id FROM category WHERE category_name = ($1))',
+			[`${category_name}`],
+		);
 		await pool.query('DELETE FROM category WHERE category_name = ($1)', [
 			`${category_name}`,
 		]);
@@ -65,10 +66,6 @@ async function editCategory(
 	category_desc,
 	new_category_name,
 ) {
-	await pool.query(
-		'UPDATE items SET category_name = ($1) WHERE category_name = ($2)',
-		[`${new_category_name}`, `${old_category_name}`],
-	);
 	await pool.query(
 		'UPDATE category SET category_name = ($1), category_desc = ($2) WHERE category_name = ($3)',
 		[`${new_category_name}`, `${category_desc}`, `${old_category_name}`],
