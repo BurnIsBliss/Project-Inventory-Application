@@ -24,6 +24,10 @@
 				<textarea name="description" id="description">
 <%= category_desc %></textarea
 				>
+				<% if (title=='Edit Category') {%>
+				<label for="password">Enter password:</label>
+				<input type="password" name="password" id="password" />
+				<%}%>
 				<input
 					type="hidden"
 					value="<%= old_category_name %>"

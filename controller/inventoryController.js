@@ -153,6 +153,11 @@ const editItem = [
 	validateInput,
 	async (req, res) => {
 		const errors = validationResult(req);
+		const password = req.body.password;
+		if (password != process.env.SECRET)
+			return res
+				.status(403)
+				.send("You don't have sufficient permission.");
 		const { category_id, item_name } = req.params;
 		const { name, description } = matchedData(req);
 		const currentItemDetails = await db.returnItemDetails(
@@ -203,6 +208,11 @@ const editCategory = [
 		const errors = validationResult(req);
 		const { category_name } = req.params;
 		const { name, description } = matchedData(req);
+		const password = req.body.password;
+		if (password != process.env.SECRET)
+			return res
+				.status(403)
+				.send("You don't have sufficient permission.");
 		const currentCategoryDetails =
 			await db.returnCategoryDetails(category_name);
 		const old_category_name = req.body.old_category_name;
