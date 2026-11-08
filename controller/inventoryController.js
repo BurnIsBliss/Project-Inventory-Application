@@ -65,7 +65,9 @@ const addNewCategory = [
 				category_name: '',
 				category_desc: '',
 				old_category_name: '',
-				errors: [{ msg: `The name, ${name} already exists.` }],
+				errors: [
+					{ msg: `The category name '${name}' already exists.` },
+				],
 			});
 	},
 ];
@@ -116,13 +118,20 @@ const addNewItem = [
 			);
 			res.redirect(`/category/${category_name[0].category_name}`);
 		} else {
+			const category_name = await db.returnCategoryName(
+				Number(category_id),
+			);
 			return res.status(400).render('itemForm', {
 				title: 'Add new item',
 				item_name: '',
 				item_desc: '',
 				old_item_name: '',
 				category_id: category_id,
-				errors: [{ msg: `The name, ${name} already exists.` }],
+				errors: [
+					{
+						msg: `The item '${name}' already exists in '${category_name[0].category_name}'.`,
+					},
+				],
 			});
 		}
 	},
@@ -156,7 +165,9 @@ const editCategory = [
 				category_name: category_name,
 				category_desc: currentCategoryDetails[0].category_desc,
 				old_category_name: old_category_name,
-				errors: [{ msg: `The name, ${name} already exists.` }],
+				errors: [
+					{ msg: `The category name '${name}' already exists.` },
+				],
 			});
 	},
 ];
