@@ -62,9 +62,9 @@ async function insertItem(category_id, item_name, item_description) {
 	}
 }
 
-async function checkDuplicateItem(category_id, name) {
+async function returnItemDetails(category_id, name) {
 	const { rows } = await pool.query(
-		'SELECT item_name FROM items WHERE category_id = ($1) AND item_name=($2)',
+		'SELECT item_name, item_desc FROM items WHERE category_id = ($1) AND item_name=($2)',
 		[category_id, name],
 	);
 	return rows;
@@ -119,5 +119,5 @@ module.exports = {
 	editCategory,
 	insertItem,
 	getCategoryId,
-	checkDuplicateItem,
+	returnItemDetails,
 };

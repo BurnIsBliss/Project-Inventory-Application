@@ -9,7 +9,10 @@
 	<body>
 		<h1><%= title %></h1>
 		<%- include("partials/errors.ejs") %>
-		<form action="/itemForm/<%= category_id %>" method="post">
+		<form
+			action="/itemForm/<%= category_id %>/<%= item_name %>"
+			method="post"
+		>
 			<div class="formContainer">
 				<label for="name">Enter the name of the item: </label>
 				<input

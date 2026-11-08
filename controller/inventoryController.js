@@ -110,7 +110,7 @@ const addNewItem = [
 			});
 		}
 		const { name, description } = matchedData(req);
-		const rows = await db.checkDuplicateItem(category_id, name);
+		const rows = await db.returnItemDetails(category_id, name);
 		if (!rows.length) {
 			await db.insertItem(category_id, name, description);
 			const category_name = await db.returnCategoryName(
@@ -136,6 +136,20 @@ const addNewItem = [
 		}
 	},
 ];
+
+const getEditItemForm = async (req, res) => {
+	const { category_id, item_name } = req.params;
+	const rows = await db.returnItemDetails(category_id, item_name);
+	res.render('itemForm', {
+		title: 'Edit items',
+		item_name: rows[0].item_name,
+		item_desc: rows[0].item_desc,
+		category_id: category_id,
+		old_item_name: rows[0].item_name,
+	});
+};
+
+const editItem = [validateInput, async (req, res) => {}];
 
 const editCategory = [
 	validateInput,
@@ -188,4 +202,6 @@ module.exports = {
 	editCategory,
 	getItemForm,
 	addNewItem,
+	getEditItemForm,
+	editItem,
 };
