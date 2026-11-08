@@ -27,5 +27,9 @@ inventoryRouter.post(
 	inventoryController.editCategory,
 );
 inventoryRouter.post('/itemForm/:category_id', inventoryController.addNewItem);
+inventoryRouter.post(
+	'/itemForm/:category_id/:item_name',
+	inventoryController.editItem,
+);
 
 module.exports = inventoryRouter;

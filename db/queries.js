@@ -109,6 +109,13 @@ async function editCategory(
 	);
 }
 
+async function editItem(category_id, name, description, old_item_name) {
+	await pool.query(
+		'UPDATE items SET category_id=($1), item_name=($2), item_desc=($3) WHERE item_name=($4)',
+		[category_id, name, description, old_item_name],
+	);
+}
+
 module.exports = {
 	getAllCategories,
 	getAllCategoryItems,
@@ -120,4 +127,5 @@ module.exports = {
 	insertItem,
 	getCategoryId,
 	returnItemDetails,
+	editItem,
 };

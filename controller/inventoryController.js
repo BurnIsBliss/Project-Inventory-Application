@@ -149,7 +149,53 @@ const getEditItemForm = async (req, res) => {
 	});
 };
 
-const editItem = [validateInput, async (req, res) => {}];
+const editItem = [
+	validateInput,
+	async (req, res) => {
+		const errors = validationResult(req);
+		const { category_id, item_name } = req.params;
+		const { name, description } = matchedData(req);
+		const currentItemDetails = await db.returnItemDetails(
+			category_id,
+			item_name,
+		);
+		const old_item_name = req.body.old_item_name;
+		if (!errors.isEmpty()) {
+			return res.status(400).render('itemForm', {
+				title: 'Edit items',
+				item_name: currentItemDetails[0].item_name,
+				item_desc: currentItemDetails[0].item_desc,
+				category_id: category_id,
+				old_item_name: old_item_name,
+				errors: errors.array(),
+			});
+		}
+		const rows = await db.returnItemDetails(category_id, name);
+		if (!rows.length || old_item_name == name) {
+			await db.editItem(category_id, name, description, old_item_name);
+			const category_name = await db.returnCategoryName(
+				Number(category_id),
+			);
+			res.redirect(`/category/${category_name[0].category_name}`);
+		} else {
+			const category_name = await db.returnCategoryName(
+				Number(category_id),
+			);
+			return res.status(400).render('itemForm', {
+				title: 'Edit items',
+				item_name: currentItemDetails[0].item_name,
+				item_desc: currentItemDetails[0].item_desc,
+				category_id: category_id,
+				old_item_name: old_item_name,
+				errors: [
+					{
+						msg: `The item '${name}' already exists in '${category_name[0].category_name}'.`,
+					},
+				],
+			});
+		}
+	},
+];
 
 const editCategory = [
 	validateInput,
