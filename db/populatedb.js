@@ -28,13 +28,23 @@ INSERT INTO items (category_id, item_name, item_desc) VALUES
 
 (async function () {
 	console.log('seeding...');
-	const client = new Client({
-		host: process.env.HOST || process.env.HOST_LOCAL,
-		user: process.env.USER || process.env.USER_LOCAL,
-		database: process.env.DATABASE || process.env.DATABASE_LOCAL,
-		password: process.env.PASSWORD || process.env.PASSWORD_LOCAL,
-		port: Number(process.env.PORT_DB) || Number(process.env.PORT_DB_LOCAL),
-	});
+	let client;
+	if (process.env.CONNECTION_STRING)
+		client = new Client({
+			connectionString: process.env.CONNECTION_STRING,
+			ssl: true,
+		});
+	else
+		client = new Client({
+			host: process.env.HOST || process.env.HOST_LOCAL,
+			user: process.env.USER || process.env.USER_LOCAL,
+			database: process.env.DATABASE || process.env.DATABASE_LOCAL,
+			password: process.env.PASSWORD || process.env.PASSWORD_LOCAL,
+			port:
+				Number(process.env.PORT_DB) ||
+				Number(process.env.PORT_DB_LOCAL),
+			ssl: true,
+		});
 	await client.connect();
 	await client.query(SQL);
 	await client.end();
