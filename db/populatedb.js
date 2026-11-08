@@ -1,6 +1,6 @@
 const { Client } = require('pg');
 const { loadEnvFile } = require('node:process');
-loadEnvFile();
+// loadEnvFile();
 
 const SQL = `
 CREATE TABLE IF NOT EXISTS category (id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY, category_name VARCHAR (255) UNIQUE NOT NULL, category_desc VARCHAR(255) DEFAULT '-');

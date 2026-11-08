@@ -1,6 +1,6 @@
 const { Pool } = require('pg');
 const { loadEnvFile } = require('node:process');
-loadEnvFile();
+// loadEnvFile();
 
 if (process.env.CONNECTION_STRING)
 	module.exports = new Pool({
