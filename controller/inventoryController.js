@@ -1,6 +1,6 @@
 const db = require('../db/queries');
 const { body, validationResult, matchedData } = require('express-validator');
-const { loadEnvFile, title } = require('node:process');
+const { loadEnvFile } = require('node:process');
 loadEnvFile();
 
 const validateInput = [
@@ -238,6 +238,13 @@ const deleteCategory = async (req, res) => {
 	res.status(200).redirect('/');
 };
 
+const deleteItem = async (req, res) => {
+	const { category_id, item_name } = req.params;
+	await db.deleteItem(category_id, item_name);
+	const category_name = await db.returnCategoryName(Number(category_id));
+	res.redirect(`/category/${category_name[0].category_name}`);
+};
+
 module.exports = {
 	getCategories,
 	getCategoryItems,
@@ -250,4 +257,5 @@ module.exports = {
 	addNewItem,
 	getEditItemForm,
 	editItem,
+	deleteItem,
 };

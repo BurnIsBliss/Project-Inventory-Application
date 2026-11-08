@@ -116,6 +116,13 @@ async function editItem(category_id, name, description, old_item_name) {
 	);
 }
 
+async function deleteItem(category_id, item_name) {
+	await pool.query(
+		'DELETE FROM items WHERE category_id = ($1) AND item_name=($2)',
+		[category_id, item_name],
+	);
+}
+
 module.exports = {
 	getAllCategories,
 	getAllCategoryItems,
@@ -128,4 +135,5 @@ module.exports = {
 	getCategoryId,
 	returnItemDetails,
 	editItem,
+	deleteItem,
 };

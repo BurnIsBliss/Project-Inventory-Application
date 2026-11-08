@@ -19,6 +19,10 @@ inventoryRouter.get(
 	inventoryController.getEditItemForm,
 );
 inventoryRouter.get('/:category_name', inventoryController.deleteCategory);
+inventoryRouter.get(
+	'/deleteItem/:category_id/:item_name',
+	inventoryController.deleteItem,
+);
 
 // post requests
 inventoryRouter.post('/categoryForm', inventoryController.addNewCategory);
