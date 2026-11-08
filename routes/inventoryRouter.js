@@ -18,10 +18,13 @@ inventoryRouter.get(
 	'/itemForm/:category_id/:item_name',
 	inventoryController.getEditItemForm,
 );
-inventoryRouter.get('/:category_name', inventoryController.deleteCategory);
+inventoryRouter.get(
+	'/deleteCategory/:category_name',
+	inventoryController.displayDeleteForm,
+);
 inventoryRouter.get(
 	'/deleteItem/:category_id/:item_name',
-	inventoryController.deleteItem,
+	inventoryController.displayDeleteForm,
 );
 
 // post requests
@@ -34,6 +37,14 @@ inventoryRouter.post('/itemForm/:category_id', inventoryController.addNewItem);
 inventoryRouter.post(
 	'/itemForm/:category_id/:item_name',
 	inventoryController.editItem,
+);
+inventoryRouter.post(
+	'/deleteCategory/:category_name',
+	inventoryController.deleteCategory,
+);
+inventoryRouter.post(
+	'/deleteItem/:category_id/:item_name',
+	inventoryController.deleteItem,
 );
 
 module.exports = inventoryRouter;

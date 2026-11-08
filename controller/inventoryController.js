@@ -242,13 +242,39 @@ const editCategory = [
 	},
 ];
 
+const displayDeleteForm = async (req, res) => {
+	const { category_name, category_id, item_name } = req.params;
+	if (category_name)
+		res.render('password', {
+			category_name: category_name,
+			category_id: '',
+			item_name: '',
+		});
+	else
+		res.render('password', {
+			category_name: '',
+			category_id: category_id,
+			item_name: item_name,
+		});
+};
+
 const deleteCategory = async (req, res) => {
+	const password = req.body.password;
+	if (password != process.env.SECRET)
+		return res
+			.status(403)
+			.send('You are not authorized to perform this action. ');
 	const { category_name } = req.params;
 	await db.deleteCategory(category_name);
 	res.status(200).redirect('/');
 };
 
 const deleteItem = async (req, res) => {
+	const password = req.body.password;
+	if (password != process.env.SECRET)
+		return res
+			.status(403)
+			.send('You are not authorized to perform this action. ');
 	const { category_id, item_name } = req.params;
 	await db.deleteItem(category_id, item_name);
 	const category_name = await db.returnCategoryName(Number(category_id));
@@ -268,4 +294,5 @@ module.exports = {
 	getEditItemForm,
 	editItem,
 	deleteItem,
+	displayDeleteForm,
 };
